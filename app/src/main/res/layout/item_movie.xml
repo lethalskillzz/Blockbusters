@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/recyclerCardPadding"
+    card_view:cardCornerRadius="0dp">
+
+    <LinearLayout
+        android:id="@+id/rvItemLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rvItemRelative"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
+
+            <ImageView
+                android:id="@+id/rvItemPath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/rvItemDescription"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/rvItemTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorBlackTitleBackground"
+                android:ellipsize="end"
+                android:padding="@dimen/recyclerTitlePadding"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/recyclerTitleSize" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

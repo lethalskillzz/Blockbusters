@@ -1,7 +1,9 @@
-package com.lethalskillzz.blockbusters;
+package com.lethalskillzz.blockbusters.blockbusters.presentation.Splash;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.lethalskillzz.blockbusters.R;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -9,5 +11,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+
     }
 }

@@ -5,38 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/recyclerCardPadding"
-    card_view:cardCornerRadius="0dp">
+    card_view:cardCornerRadius="0dp"
+    >
 
     <LinearLayout
-        android:id="@+id/rvItemLinear"
+        android:id="@+id/item_result_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <RelativeLayout
-            android:id="@+id/rvItemRelative"
+            android:id="@+id/item_result_relative"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5">
+            android:layout_weight="5"
+            >
 
             <ImageView
-                android:id="@+id/rvItemPath"
+                android:id="@+id/item_result_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/rvItemDescription"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                />
 
             <TextView
-                android:id="@+id/rvItemTitle"
+                android:id="@+id/item_result_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorBlackTitleBackground"
                 android:ellipsize="end"
                 android:padding="@dimen/recyclerTitlePadding"
-                android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/recyclerTitleSize" />
+                android:textSize="@dimen/recyclerTitleSize"
+                android:maxLines="1"
+                />
 
         </RelativeLayout>
 

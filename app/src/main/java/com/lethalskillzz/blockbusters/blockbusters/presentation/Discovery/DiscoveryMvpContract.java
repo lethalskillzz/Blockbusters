@@ -1,7 +1,6 @@
 package com.lethalskillzz.blockbusters.blockbusters.presentation.Discovery;
 
-import com.lethalskillzz.blockbusters.blockbusters.data.model.Page;
-import com.lethalskillzz.blockbusters.blockbusters.presentation.Details.DetailsMvpContract;
+import com.lethalskillzz.blockbusters.blockbusters.data.model.Result;
 import com.lethalskillzz.blockbusters.mvp.Mvp;
 
 import java.util.List;
@@ -13,7 +12,8 @@ import java.util.List;
 public interface DiscoveryMvpContract {
 
     public interface View extends Mvp.View {
-        void showPages(List<Page> pages);
+
+        void showResults(List<Result> results);
 
         void showError(String error);
 
@@ -22,7 +22,7 @@ public interface DiscoveryMvpContract {
         void hideLoading();
     }
 
-    public interface Presenter extends Mvp.Presenter<DetailsMvpContract.View> {
+    public interface Presenter extends Mvp.Presenter<DiscoveryMvpContract.View> {
         void getPage();
     }
 

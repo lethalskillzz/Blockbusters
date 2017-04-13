@@ -24,14 +24,14 @@ import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.API_
  * Created by ibrahimabdulkadir on 12/04/2017.
  */
 
+
+
 public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View> implements DiscoveryMvpContract.Presenter {
 
     private static final String TAG = "DiscoveryPresenter";
-    private ApiInterface apiInterface;
     private List<Result> results;
 
-    public DiscoveryPresenter(ApiInterface apiInterface) {
-        this.apiInterface = apiInterface;
+    public DiscoveryPresenter() {
         results = new ArrayList<>();
     }
 
@@ -39,17 +39,21 @@ public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View>
     @Override
     public void getPage() {
 
+        checkViewAttached();
+        getView().showLoading();
+
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
         Observable<Page> call = apiService.getPopular(API_KEY);
-        Subscription subscription = call
-                .subscribeOn(Schedulers.io())
+        Subscription subscription = call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Page>() {
                     @Override
                     public void onCompleted() {
 
+                        getView().hideLoading();
+                        Log.e(TAG, "size: " + results.size());
 
                     }
 
@@ -71,10 +75,17 @@ public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View>
                     public void onNext(Page page) {
                         results = page.getResults();
                         getView().hideLoading();
-                        //getView().showUsers(users);
+                        getView().showResults(results);
+
+                        Log.e(TAG, "size: " + results.size());
+
                     }
 
                 });
+
+                addSubscription(subscription);
+
     }
+
 
 }

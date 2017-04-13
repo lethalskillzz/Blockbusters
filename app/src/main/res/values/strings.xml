@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">BlockBusters</string>
+    <string name="splash_text">Udacity</string>
+    <string name="msg_refresh">Pull to refresh</string>
+
+    <string name="error_no_internet">Error! No internet connection.</string>
+
 
     <string name="menuTogglePopularity">Order by popularity</string>
     <string name="menuToggleRating">Order by rating</string>

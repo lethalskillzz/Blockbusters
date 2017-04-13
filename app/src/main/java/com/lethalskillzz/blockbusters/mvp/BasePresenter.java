@@ -1,10 +1,13 @@
 package com.lethalskillzz.blockbusters.mvp;
 
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * Created by ibrahimabdulkadir on 11/04/2017.
  */
 
-public class BasePresenter <T extends Mvp.View> implements Mvp.Presenter<T> {
+public class BasePresenter<T extends Mvp.View> implements Mvp.Presenter<T> {
 
     private T view;
 
@@ -45,4 +48,5 @@ public class BasePresenter <T extends Mvp.View> implements Mvp.Presenter<T> {
             super("Please call Presenter.attachView(MvpView) before requesting data to the Presenter");
         }
     }
+
 }

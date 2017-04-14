@@ -14,7 +14,6 @@ import java.util.List;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -35,9 +34,8 @@ public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View>
         results = new ArrayList<>();
     }
 
-
     @Override
-    public void getPage() {
+    public void getPage(String mOrderType) {
 
         checkViewAttached();
         getView().showLoading();
@@ -45,29 +43,39 @@ public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View>
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Observable<Page> call = apiService.getPopular(API_KEY);
-        Subscription subscription = call.subscribeOn(Schedulers.io())
+        Observable<Page> call;
+        if(mOrderType.equals("popularity")) {
+             call = apiService.getPopular(API_KEY);
+        } else {
+            call = apiService.getTopRated(API_KEY);
+        }
+        addSubscription(call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Page>() {
                     @Override
                     public void onCompleted() {
 
                         getView().hideLoading();
-                        Log.e(TAG, "size: " + results.size());
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
 
                         getView().hideLoading();
 
                         // cast to retrofit.HttpException to get the response code
                         if (e instanceof HttpException) {
+
                             HttpException response = (HttpException) e;
                             Log.e(TAG, "Response Code: " + response.code());
                             Log.e(TAG, "Response Message: " + response.message());
 
+                            getView().showError(response.code()+" "+response.message());
+
+                        }else {
+                            getView().showError(e.getMessage());
                         }
                     }
 
@@ -77,15 +85,14 @@ public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View>
                         getView().hideLoading();
                         getView().showResults(results);
 
-                        Log.e(TAG, "size: " + results.size());
-
                     }
 
-                });
-
-                addSubscription(subscription);
+                })
+        );
 
     }
 
-
 }
+
+
+

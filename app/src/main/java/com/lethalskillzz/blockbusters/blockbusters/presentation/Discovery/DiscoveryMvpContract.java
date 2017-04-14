@@ -23,7 +23,7 @@ public interface DiscoveryMvpContract {
     }
 
     public interface Presenter extends Mvp.Presenter<DiscoveryMvpContract.View> {
-        void getPage();
+        void getPage(String mOrderType);
     }
 
 }

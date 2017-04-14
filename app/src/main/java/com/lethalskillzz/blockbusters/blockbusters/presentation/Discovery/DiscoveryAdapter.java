@@ -3,7 +3,6 @@ package com.lethalskillzz.blockbusters.blockbusters.presentation.Discovery;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +14,11 @@ import com.lethalskillzz.blockbusters.R;
 import com.lethalskillzz.blockbusters.blockbusters.data.model.Result;
 import com.lethalskillzz.blockbusters.blockbusters.presentation.Details.DetailsActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.BASE_IMG_URL;
+import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.CLICK_GRID;
+import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.DISC_IMAGE_SIZE;
 
 /**
  * Created by ibrahimabdulkadir on 12/04/2017.
@@ -28,7 +28,8 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
     private static final String TAG = "DiscoveryAdapter";
     private Context mContext;
-    private List<Result> results = new ArrayList<>();
+    private List<Result> results;
+    private Result result;
 
 
     public DiscoveryAdapter(Context context) {
@@ -44,25 +45,25 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
-        Result result = results.get(position);
+        result = results.get(position);
         holder.title.setText(result.getTitle());
-        Glide.with(mContext).load(BASE_IMG_URL+result.getPosterPath()).into(holder.image);
+        Glide.with(mContext).load(BASE_IMG_URL+DISC_IMAGE_SIZE+result.getPosterPath()).into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        Log.e(TAG, "getItemCount: " + results.size());
+        if (results == null) {
+            return 0;
+        }
         return results.size();
     }
 
     public void setResults(List<Result> results) {
-        Log.e(TAG, "setResults() called with: results = [" + results + "]");
         this.results = results;
         notifyDataSetChanged();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView image;
         private final TextView title;
@@ -77,7 +78,7 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), DetailsActivity.class);
-            intent.putExtra("title", title.getText().toString());
+            intent.putExtra(CLICK_GRID, result);
             view.getContext().startActivity(intent);
         }
     }

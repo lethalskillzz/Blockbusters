@@ -2,32 +2,23 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/recyclerCardPadding"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     card_view:cardCornerRadius="0dp"
     >
 
-    <LinearLayout
-        android:id="@+id/item_result_linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-
         <RelativeLayout
-            android:id="@+id/item_result_relative"
+            android:id="@+id/item_result_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_height="wrap_content"
             >
 
             <ImageView
                 android:id="@+id/item_result_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/rvItemDescription"
-                android:scaleType="centerCrop"
                 />
 
             <TextView
@@ -44,7 +35,5 @@
                 />
 
         </RelativeLayout>
-
-    </LinearLayout>
 
 </android.support.v7.widget.CardView>

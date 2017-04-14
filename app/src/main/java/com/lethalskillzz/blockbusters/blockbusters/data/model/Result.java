@@ -1,5 +1,8 @@
 package com.lethalskillzz.blockbusters.blockbusters.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +12,19 @@ import java.util.List;
  * Created by ibrahimabdulkadir on 12/04/2017.
  */
 
-public class Result {
+public class Result implements Parcelable {
+
+    public static final Creator<Result> CREATOR = new Creator<Result>() {
+        @Override
+        public Result createFromParcel(Parcel in) {
+            return new Result(in);
+        }
+
+        @Override
+        public Result[] newArray(int size) {
+            return new Result[size];
+        }
+    };
 
     @SerializedName("poster_path")
     @Expose
@@ -52,7 +67,7 @@ public class Result {
     private Boolean video;
     @SerializedName("vote_average")
     @Expose
-    private Integer voteAverage;
+    private Double voteAverage;
 
     public String getPosterPath() {
         return posterPath;
@@ -158,12 +173,37 @@ public class Result {
         this.video = video;
     }
 
-    public Integer getVoteAverage() {
+    public Double getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(Integer voteAverage) {
+    public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    protected Result(Parcel in) {
+        overview = in.readString();
+        releaseDate = in.readString();
+        title = in.readString();
+        voteAverage = in.readDouble();
+        posterPath = in.readString();
+        backdropPath = in.readString();
+
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(overview);
+        dest.writeString(releaseDate);
+        dest.writeString(title);
+        dest.writeDouble(voteAverage);
+        dest.writeString(posterPath);
+        dest.writeString(backdropPath);
+    }
 }

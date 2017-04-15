@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,9 +25,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
 
     private ActionBar mActionBar;
 
-    @Bind(R.id.details_toolbar)
-    Toolbar toolbar;
-    @Bind(R.id.details_coordinator_layout)
+
     CoordinatorLayout mCoordinatorLayout;
     @Bind(R.id.details_title)
     TextView mTitle;
@@ -49,9 +46,6 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
 
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        mActionBar = getSupportActionBar();
-
         presenter = new DetailsPresenter();
         presenter.attachView(this);
 
@@ -59,7 +53,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
         Result result = getIntent().getParcelableExtra(CLICK_GRID);
 
         mTitle.setText(result.getTitle());
-        mRating.setText(String.valueOf(result.getVoteAverage()));
+        mRating.setText(String.valueOf(result.getVoteAverage())+getString(R.string.full_rating));
         mDate.setText(result.getReleaseDate());
         mPlot.setText(result.getOverview());
         Glide.with(this)

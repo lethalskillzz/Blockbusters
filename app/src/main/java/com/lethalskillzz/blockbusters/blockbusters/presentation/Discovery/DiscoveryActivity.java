@@ -2,6 +2,7 @@ package com.lethalskillzz.blockbusters.blockbusters.presentation.Discovery;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,6 +29,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.ORDER_TYPE_KEY;
+import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.RESULT_TEMP_KEY;
 
 public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvpContract.View {
 
@@ -42,15 +44,14 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
     @Bind(R.id.discovery_toolbar)
     Toolbar toolbar;
+    @Bind(R.id.discovery_coordinator_layout)
+    CoordinatorLayout coordinatorLayout;
     @Bind(R.id.discovery_recycler_view)
     RecyclerView rView;
     @Bind(R.id.discovery_swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.refresh_text)
     TextView refreshText;
-    @Bind(R.id.discovery_coordinator_layout)
-    CoordinatorLayout coordinatorLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,6 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
         setSupportActionBar(toolbar);
         mActionBar = getSupportActionBar();
-
 
         // creating connection detector class instance
         cd = new ConnectionDetector(this);
@@ -81,25 +81,34 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
         refreshText.setVisibility(View.GONE);
 
 
-        if (cd.isConnectingToInternet()) {
-
-            presenter.getPage(mOrderType);
-
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(ORDER_TYPE_KEY)) {
+                mOrderType = savedInstanceState.getString(ORDER_TYPE_KEY, "popularity");
+            }
+            if (savedInstanceState.containsKey(RESULT_TEMP_KEY)) {
+                mResult = savedInstanceState.getParcelableArrayList(RESULT_TEMP_KEY);
+                discoveryAdapter.setResults(mResult);
+            }
+            refreshActionBar();
         } else {
-            mSwipeRefreshLayout.setRefreshing(false);
-            showError(getString(R.string.error_no_internet));
-        }
+            if (cd.isConnectingToInternet()) {
 
+                presenter.getPage(mOrderType);
+
+            } else {
+                mSwipeRefreshLayout.setRefreshing(false);
+                showError(getString(R.string.error_no_internet));
+            }
+        }
 
     }
 
     private  void setupViews () {
 
-        //LinearLayoutManager lLayout = new LinearLayoutManager(this);
         rView.addItemDecoration(new SpacesItemDecoration(10));
         GridLayoutManager gLayout = new GridLayoutManager(this, 2);
         rView.setLayoutManager(gLayout);
-        //rView.setHasFixedSize(true);
+        rView.setHasFixedSize(true);
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -115,8 +124,6 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
                 }
             }
         });
-
-
     }
 
     @Override
@@ -164,13 +171,13 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if (mOrderType != null) {
-            outState.putString(ORDER_TYPE_KEY, mOrderType);
-        }
-        if (mResult != null) {
-           // outState.putParcelable(RESULT_TEMP_KEY, mResult);
-        }
+
         super.onSaveInstanceState(outState);
+
+        if (mResult != null) {
+            outState.putString(ORDER_TYPE_KEY, mOrderType);
+            outState.putParcelableArrayList(RESULT_TEMP_KEY, (ArrayList<? extends Parcelable>) mResult);
+        }
     }
 
 

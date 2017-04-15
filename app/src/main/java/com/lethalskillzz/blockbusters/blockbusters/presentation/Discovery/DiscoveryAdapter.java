@@ -29,7 +29,6 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
     private static final String TAG = "DiscoveryAdapter";
     private Context mContext;
     private List<Result> results;
-    private Result result;
 
 
     public DiscoveryAdapter(Context context) {
@@ -45,7 +44,7 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        result = results.get(position);
+        Result result = results.get(position);
         holder.title.setText(result.getTitle());
         Glide.with(mContext).load(BASE_IMG_URL+DISC_IMAGE_SIZE+result.getPosterPath()).into(holder.image);
     }
@@ -78,7 +77,7 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), DetailsActivity.class);
-            intent.putExtra(CLICK_GRID, result);
+            intent.putExtra(CLICK_GRID, results.get(getAdapterPosition()));
             view.getContext().startActivity(intent);
         }
     }

@@ -24,9 +24,6 @@
     <dimen name="isFavoriteIconWidth">15dp</dimen>
     <dimen name="isFavoriteIconMargin">5dp</dimen>
 
-    <dimen name="detailsActionBarIconSize">24dp</dimen>
-    <dimen name="detailsActionBarIconMargin">5dp</dimen>
-
     <dimen name="marginHorizontalSeparator">5dp</dimen>
     <dimen name="heightHorizontalSeparator">1dp</dimen>
     <dimen name="internalFrameHeight">300dp</dimen>
@@ -35,12 +32,4 @@
     <dimen name="rvReviewContentTextSize">9sp</dimen>
     <dimen name="rvReviewURLTextSize">10sp</dimen>
 
-    <dimen name="mainFragmentProgressMarginTop">-5dp</dimen>
-
-    <dimen name="fragmentAboutPadding">20dp</dimen>
-    <dimen name="fragmentAboutTitleSizeFont">15sp</dimen>
-
-    <dimen name="navHeaderImageMarginTop">25dp</dimen>
-    <dimen name="navHeaderImageSize">20dp</dimen>
-    <dimen name="navHeaderContentPadding">16dp</dimen>
 </resources>

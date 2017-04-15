@@ -29,7 +29,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.ORDER_TYPE_KEY;
-import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.RESULT_TEMP_KEY;
+import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.RESULT_KEY;
 
 public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvpContract.View {
 
@@ -85,8 +85,8 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
             if (savedInstanceState.containsKey(ORDER_TYPE_KEY)) {
                 mOrderType = savedInstanceState.getString(ORDER_TYPE_KEY, "popularity");
             }
-            if (savedInstanceState.containsKey(RESULT_TEMP_KEY)) {
-                mResult = savedInstanceState.getParcelableArrayList(RESULT_TEMP_KEY);
+            if (savedInstanceState.containsKey(RESULT_KEY)) {
+                mResult = savedInstanceState.getParcelableArrayList(RESULT_KEY);
                 discoveryAdapter.setResults(mResult);
             }
             refreshActionBar();
@@ -176,7 +176,7 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
         if (mResult != null) {
             outState.putString(ORDER_TYPE_KEY, mOrderType);
-            outState.putParcelableArrayList(RESULT_TEMP_KEY, (ArrayList<? extends Parcelable>) mResult);
+            outState.putParcelableArrayList(RESULT_KEY, (ArrayList<? extends Parcelable>) mResult);
         }
     }
 
@@ -185,9 +185,9 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (!mOrderType.equals("popularity")) {
-            menu.findItem(R.id.menu_toggle).setTitle(R.string.menuTogglePopularity);
+            menu.findItem(R.id.menu_toggle).setTitle(R.string.toggle_popular);
         } else {
-            menu.findItem(R.id.menu_toggle).setTitle(R.string.menuToggleRating);
+            menu.findItem(R.id.menu_toggle).setTitle(R.string.toggle_top_rated);
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -213,10 +213,9 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
     private void refreshActionBar() {
         if (mActionBar != null) {
-            mActionBar.setSubtitle(getString(R.string.subtitleOrderedPrefix) +
-                    (mOrderType.equals("popularity")
-                            ? getString(R.string.subtitlePopularity)
-                            : getString(R.string.subtitleRating)));
+            mActionBar.setSubtitle((mOrderType.equals("popularity")
+                            ? getString(R.string.subtitle_most_popular)
+                            : getString(R.string.subtitle_top_rated)));
             mActionBar.invalidateOptionsMenu();
         }
     }
@@ -225,11 +224,11 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
         if (cd.isConnectingToInternet()) {
 
-            if (item.getTitle().equals(getString(R.string.menuTogglePopularity))) {
-                item.setTitle(getString(R.string.menuToggleRating));
+            if (item.getTitle().equals(getString(R.string.toggle_popular))) {
+                item.setTitle(getString(R.string.toggle_top_rated));
                 mOrderType = "popularity";
             } else {
-                item.setTitle(getString(R.string.menuTogglePopularity));
+                item.setTitle(getString(R.string.toggle_popular));
                 mOrderType = "top_rating";
             }
 

@@ -3,33 +3,15 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="detailsFragmentPadding">10dp</dimen>
-    <dimen name="detailsFragmentTitleSize">15sp</dimen>
-    <dimen name="detailsFragmentDateSize">11sp</dimen>
-    <dimen name="detailsFragmentRateSize">11sp</dimen>
+    <dimen name="details_padding">10dp</dimen>
+    <dimen name="details_title_size">15sp</dimen>
+    <dimen name="details_date_size">11sp</dimen>
+    <dimen name="details_rate_size">11sp</dimen>
 
-    <dimen name="imageIconMargin">2dp</dimen>
-    <dimen name="imageIconSize">10dp</dimen>
 
-    <dimen name="detailsFragmentPlotSize">10sp</dimen>
+    <dimen name="details_plot_size">10sp</dimen>
 
-    <dimen name="recyclerInfoSize">10sp</dimen>
-    <dimen name="recyclerTitleSize">12sp</dimen>
-    <dimen name="recyclerOverviewSize">8sp</dimen>
-    <dimen name="recyclerInfoLinearMargin">5dp</dimen>
-    <dimen name="recyclerInfoLinearMarginSmall">2dp</dimen>
-    <dimen name="recyclerTitlePadding">5dp</dimen>
-    <dimen name="recyclerCardPadding">10dp</dimen>
-
-    <dimen name="isFavoriteIconWidth">15dp</dimen>
-    <dimen name="isFavoriteIconMargin">5dp</dimen>
-
-    <dimen name="marginHorizontalSeparator">5dp</dimen>
-    <dimen name="heightHorizontalSeparator">1dp</dimen>
-    <dimen name="internalFrameHeight">300dp</dimen>
-
-    <dimen name="rvReviewAuthorTextSize">12sp</dimen>
-    <dimen name="rvReviewContentTextSize">9sp</dimen>
-    <dimen name="rvReviewURLTextSize">10sp</dimen>
+    <dimen name="result_item_title_size">12sp</dimen>
+    <dimen name="result_item_title_padding">5dp</dimen>
 
 </resources>

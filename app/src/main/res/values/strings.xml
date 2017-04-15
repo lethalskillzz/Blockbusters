@@ -6,30 +6,16 @@
     <string name="error_no_internet">Couldn\'t connect. Please check your Internet connection!</string>
 
 
-    <string name="menuTogglePopularity">Order by popularity</string>
-    <string name="menuToggleRating">Order by rating</string>
+    <string name="toggle_popular">Popular movies</string>
+    <string name="toggle_top_rated">Top rated movies</string>
 
-    <string name="rvItemDescription">Image description</string>
-    <string name="rvPopularityDescription">Popularity description</string>
-    <string name="rvRatingDescription">Rating description</string>
+    <string name="image_desc">Image description</string>
 
-    <string name="detailsBackgroundDescription">Background description</string>
+    <string name="msg_loading">Loading&#8230;</string>
 
-    <string name="detailsPosterDescription">Poster description</string>
-    <string name="placeholderText">Loading&#8230;</string>
-
-    <string name="subtitleOrderedPrefix">"Ordered by "</string>
-    <string name="subtitleFavorites">Favorites</string>
-    <string name="subtitleRating">Rating</string>
-    <string name="subtitlePopularity">Popularity</string>
-
-
-
-    <string name="detailsFragmentTrailersText">Trailers:</string>
-    <string name="detailsFragmentReviewsText">Reviews:</string>
-    <string name="undoFavorites">Undo</string>
-
-
+    <string name="subtitle_top_rated">Top rated</string>
+    <string name="subtitle_most_popular">Most popular</string>
 
     <string name="full_rating">/10</string>
+
 </resources>

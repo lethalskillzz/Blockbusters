@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:contentDescription="@string/rvItemDescription"
+                android:contentDescription="@string/image_desc"
                 />
 
             <TextView
@@ -29,9 +29,9 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorBlackTitleBackground"
                 android:ellipsize="end"
-                android:padding="@dimen/recyclerTitlePadding"
+                android:padding="@dimen/result_item_title_padding"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/recyclerTitleSize"
+                android:textSize="@dimen/result_item_title_size"
                 android:maxLines="1"
                 />
 

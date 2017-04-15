@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBlackBackground"
     android:orientation="vertical"
-    android:padding="@dimen/detailsFragmentPadding"
+    android:padding="@dimen/details_padding"
     tools:context=".blockbusters.presentation.Details.DetailsActivity">
 
 
@@ -25,9 +25,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:text="@string/placeholderText"
+                    android:text="@string/msg_loading"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/detailsFragmentTitleSize"
+                    android:textSize="@dimen/details_title_size"
                     android:textStyle="bold"
                     />
 
@@ -44,7 +44,7 @@
                     android:layout_width="0dp"
                     android:layout_height="250dp"
                     android:layout_weight="0.6"
-                    android:contentDescription="@string/detailsPosterDescription"
+                    android:contentDescription="@string/image_desc"
                     android:scaleType="centerCrop"
                     />
 
@@ -60,9 +60,9 @@
                         android:id="@+id/details_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/placeholderText"
+                        android:text="@string/msg_loading"
                         android:textColor="@color/colorText"
-                        android:textSize="@dimen/detailsFragmentDateSize"
+                        android:textSize="@dimen/details_date_size"
                         android:textStyle="bold"
                         />
 
@@ -71,9 +71,9 @@
                         android:id="@+id/details_vote"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/placeholderText"
+                        android:text="@string/msg_loading"
                         android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/detailsFragmentRateSize"
+                        android:textSize="@dimen/details_rate_size"
                         android:textStyle="bold"
                         />
 
@@ -85,9 +85,9 @@
                 android:id="@+id/details_plot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/placeholderText"
+                android:text="@string/msg_loading"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/detailsFragmentPlotSize"
+                android:textSize="@dimen/details_plot_size"
                 />
 
         </LinearLayout>

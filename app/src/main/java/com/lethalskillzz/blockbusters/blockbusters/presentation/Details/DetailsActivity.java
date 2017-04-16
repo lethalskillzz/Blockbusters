@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.lethalskillzz.blockbusters.R;
 import com.lethalskillzz.blockbusters.blockbusters.data.model.Result;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.BASE_IMG_URL;
@@ -27,15 +27,15 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
 
 
     CoordinatorLayout mCoordinatorLayout;
-    @Bind(R.id.details_title)
+    @BindView(R.id.details_title)
     TextView mTitle;
-    @Bind(R.id.details_date)
+    @BindView(R.id.details_date)
     TextView mDate;
-    @Bind(R.id.details_vote)
+    @BindView(R.id.details_vote)
     TextView mRating;
-    @Bind(R.id.details_plot)
+    @BindView(R.id.details_plot)
     TextView mPlot;
-    @Bind(R.id.details_image)
+    @BindView(R.id.details_image)
     ImageView mImage;
 
 

@@ -25,7 +25,7 @@ import com.lethalskillzz.blockbusters.blockbusters.widget.SpacesItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.ORDER_TYPE_KEY;
@@ -42,15 +42,15 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
     private String mOrderType;
     private List<Result> mResult;
 
-    @Bind(R.id.discovery_toolbar)
+    @BindView(R.id.discovery_toolbar)
     Toolbar toolbar;
-    @Bind(R.id.discovery_coordinator_layout)
+    @BindView(R.id.discovery_coordinator_layout)
     CoordinatorLayout coordinatorLayout;
-    @Bind(R.id.discovery_recycler_view)
+    @BindView(R.id.discovery_recycler_view)
     RecyclerView rView;
-    @Bind(R.id.discovery_swipe_refresh_layout)
+    @BindView(R.id.discovery_swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @Bind(R.id.refresh_text)
+    @BindView(R.id.refresh_text)
     TextView refreshText;
 
     @Override

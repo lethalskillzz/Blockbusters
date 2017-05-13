@@ -1,8 +1,6 @@
 package com.lethalskillzz.blockbusters.blockbusters.presentation.Details;
 
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,10 +21,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
     private static final String TAG = "DetailsActivity";
     DetailsMvpContract.Presenter presenter;
 
-    private ActionBar mActionBar;
 
-
-    CoordinatorLayout mCoordinatorLayout;
     @BindView(R.id.details_title)
     TextView mTitle;
     @BindView(R.id.details_date)

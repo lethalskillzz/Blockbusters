@@ -2,8 +2,8 @@ package com.lethalskillzz.blockbusters.blockbusters.presentation.Discovery;
 
 import android.util.Log;
 
-import com.lethalskillzz.blockbusters.blockbusters.data.model.Page;
-import com.lethalskillzz.blockbusters.blockbusters.data.model.Result;
+import com.lethalskillzz.blockbusters.blockbusters.data.model.Movie;
+import com.lethalskillzz.blockbusters.blockbusters.data.model.MovieResult;
 import com.lethalskillzz.blockbusters.blockbusters.data.rest.ApiClient;
 import com.lethalskillzz.blockbusters.blockbusters.data.rest.ApiInterface;
 import com.lethalskillzz.blockbusters.mvp.BasePresenter;
@@ -28,10 +28,10 @@ import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.API_
 public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View> implements DiscoveryMvpContract.Presenter {
 
     private static final String TAG = "DiscoveryPresenter";
-    private List<Result> results;
+    private List<MovieResult> movieResults;
 
     public DiscoveryPresenter() {
-        results = new ArrayList<>();
+        movieResults = new ArrayList<>();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View>
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Observable<Page> call;
+        Observable<Movie> call;
         if(mOrderType.equals("popularity")) {
              call = apiService.getPopular(API_KEY);
         } else {
@@ -51,7 +51,7 @@ public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View>
         }
         addSubscription(call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Page>() {
+                .subscribe(new Subscriber<Movie>() {
                     @Override
                     public void onCompleted() {
 
@@ -80,10 +80,10 @@ public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View>
                     }
 
                     @Override
-                    public void onNext(Page page) {
-                        results = page.getResults();
+                    public void onNext(Movie movie) {
+                        movieResults = movie.getMovieResults();
                         getView().hideLoading();
-                        getView().showResults(results);
+                        getView().showResults(movieResults);
 
                     }
 

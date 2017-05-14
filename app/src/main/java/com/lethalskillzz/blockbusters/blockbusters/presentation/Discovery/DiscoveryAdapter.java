@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lethalskillzz.blockbusters.R;
-import com.lethalskillzz.blockbusters.blockbusters.data.model.Result;
+import com.lethalskillzz.blockbusters.blockbusters.data.model.MovieResult;
 import com.lethalskillzz.blockbusters.blockbusters.presentation.Details.DetailsActivity;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
     private static final String TAG = "DiscoveryAdapter";
     private Context mContext;
-    private List<Result> results;
+    private List<MovieResult> movieResults;
 
 
     public DiscoveryAdapter(Context context) {
@@ -44,21 +44,21 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Result result = results.get(position);
-        holder.title.setText(result.getTitle());
-        Glide.with(mContext).load(BASE_IMG_URL+DISC_IMAGE_SIZE+result.getPosterPath()).into(holder.image);
+        MovieResult movieResult = movieResults.get(position);
+        holder.title.setText(movieResult.getTitle());
+        Glide.with(mContext).load(BASE_IMG_URL+DISC_IMAGE_SIZE+ movieResult.getPosterPath()).into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        if (results == null) {
+        if (movieResults == null) {
             return 0;
         }
-        return results.size();
+        return movieResults.size();
     }
 
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setMovieResults(List<MovieResult> movieResults) {
+        this.movieResults = movieResults;
         notifyDataSetChanged();
     }
 
@@ -77,7 +77,7 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), DetailsActivity.class);
-            intent.putExtra(CLICK_GRID, results.get(getAdapterPosition()));
+            intent.putExtra(CLICK_GRID, movieResults.get(getAdapterPosition()));
             view.getContext().startActivity(intent);
         }
     }

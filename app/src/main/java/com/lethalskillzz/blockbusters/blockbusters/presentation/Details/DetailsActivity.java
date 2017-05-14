@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lethalskillzz.blockbusters.R;
-import com.lethalskillzz.blockbusters.blockbusters.data.model.Result;
+import com.lethalskillzz.blockbusters.blockbusters.data.model.MovieResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,14 +45,14 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
         presenter.attachView(this);
 
 
-        Result result = getIntent().getParcelableExtra(CLICK_GRID);
+        MovieResult movieResult = getIntent().getParcelableExtra(CLICK_GRID);
 
-        mTitle.setText(result.getTitle());
-        mRating.setText(String.valueOf(result.getVoteAverage())+getString(R.string.full_rating));
-        mDate.setText(result.getReleaseDate());
-        mPlot.setText(result.getOverview());
+        mTitle.setText(movieResult.getTitle());
+        mRating.setText(String.valueOf(movieResult.getVoteAverage())+getString(R.string.full_rating));
+        mDate.setText(movieResult.getReleaseDate());
+        mPlot.setText(movieResult.getOverview());
         Glide.with(this)
-                .load(BASE_IMG_URL+DETAIL_IMAGE_SIZE+result.getPosterPath())
+                .load(BASE_IMG_URL+DETAIL_IMAGE_SIZE+ movieResult.getPosterPath())
                 .into(mImage);
 
     }

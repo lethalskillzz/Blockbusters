@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lethalskillzz.blockbusters.R;
-import com.lethalskillzz.blockbusters.blockbusters.data.model.Result;
+import com.lethalskillzz.blockbusters.blockbusters.data.model.MovieResult;
 import com.lethalskillzz.blockbusters.blockbusters.util.ConnectionDetector;
 import com.lethalskillzz.blockbusters.blockbusters.widget.SpacesItemDecoration;
 
@@ -40,7 +40,7 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
     private ActionBar mActionBar;
     private String mOrderType;
-    private List<Result> mResult;
+    private List<MovieResult> mMovieResult;
 
     @BindView(R.id.discovery_toolbar)
     Toolbar toolbar;
@@ -65,7 +65,7 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
         // creating connection detector class instance
         cd = new ConnectionDetector(this);
-        mResult = new ArrayList<>();
+        mMovieResult = new ArrayList<>();
         mOrderType = "popularity";
 
         refreshActionBar();
@@ -86,8 +86,8 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
                 mOrderType = savedInstanceState.getString(ORDER_TYPE_KEY, "popularity");
             }
             if (savedInstanceState.containsKey(RESULT_KEY)) {
-                mResult = savedInstanceState.getParcelableArrayList(RESULT_KEY);
-                discoveryAdapter.setResults(mResult);
+                mMovieResult = savedInstanceState.getParcelableArrayList(RESULT_KEY);
+                discoveryAdapter.setMovieResults(mMovieResult);
             }
             refreshActionBar();
         } else {
@@ -133,9 +133,9 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
     }
 
     @Override
-    public void showResults(List<Result> results) {
-        mResult = results;
-        discoveryAdapter.setResults(mResult);
+    public void showResults(List<MovieResult> movieResults) {
+        mMovieResult = movieResults;
+        discoveryAdapter.setMovieResults(mMovieResult);
     }
 
     @Override
@@ -174,9 +174,9 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
         super.onSaveInstanceState(outState);
 
-        if (mResult != null) {
+        if (mMovieResult != null) {
             outState.putString(ORDER_TYPE_KEY, mOrderType);
-            outState.putParcelableArrayList(RESULT_KEY, (ArrayList<? extends Parcelable>) mResult);
+            outState.putParcelableArrayList(RESULT_KEY, (ArrayList<? extends Parcelable>) mMovieResult);
         }
     }
 

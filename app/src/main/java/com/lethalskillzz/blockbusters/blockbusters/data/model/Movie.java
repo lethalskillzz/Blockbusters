@@ -10,14 +10,14 @@ import java.util.List;
  * Created by ibrahimabdulkadir on 12/04/2017.
  */
 
-public class Page {
+public class Movie {
 
     @SerializedName("page")
     @Expose
     private Integer page;
     @SerializedName("results")
     @Expose
-    private List<Result> results = null;
+    private List<MovieResult> results = null;
     @SerializedName("total_results")
     @Expose
     private Integer totalResults;
@@ -33,11 +33,11 @@ public class Page {
         this.page = page;
     }
 
-    public List<Result> getResults() {
+    public List<MovieResult> getMovieResults() {
         return results;
     }
 
-    public void setResults(List<Result> results) {
+    public void setMovieResults(List<MovieResult> results) {
         this.results = results;
     }
 
@@ -60,4 +60,3 @@ public class Page {
 }
 
 
- 

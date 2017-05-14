@@ -1,10 +1,12 @@
 package com.lethalskillzz.blockbusters.blockbusters.data.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.lethalskillzz.blockbusters.blockbusters.data.database.MovieContract;
 
 import java.util.List;
 
@@ -68,6 +70,33 @@ public class MovieResult implements Parcelable {
     @SerializedName("vote_average")
     @Expose
     private Double voteAverage;
+
+
+    public MovieResult(String posterPath, String overview, String releaseDate, int id, String title,
+                       String backdropPath, double popularity, double voteAverage) {
+
+        this.posterPath = posterPath;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.id = id;
+        this.title = title;
+        this.backdropPath = backdropPath;
+        this.popularity = popularity;
+        this.voteAverage = voteAverage;
+    }
+
+    public static MovieResult buildResult(Cursor cursor) {
+        return new MovieResult(
+                cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_POSTER_PATH)),
+                cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_SYNOPSIS)),
+                cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_DATE)),
+                Integer.valueOf(cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_MOVIE_ID))),
+                cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_TITLE)),
+                cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_BACKDROP_PATH)),
+                Double.valueOf(cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_POPULARITY))),
+                Double.valueOf(cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_RATING)))
+        );
+    }
 
     public String getPosterPath() {
         return posterPath;
@@ -206,4 +235,6 @@ public class MovieResult implements Parcelable {
         dest.writeString(posterPath);
         dest.writeString(backdropPath);
     }
+
+
 }

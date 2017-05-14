@@ -25,10 +25,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 FavoriteEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
                 FavoriteEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
                 FavoriteEntry.COLUMN_BACKDROP_PATH + " TEXT NOT NULL, " +
-                FavoriteEntry.COLUMN_SYNOPSIS + " TEXT NOT NULL, " +
-                FavoriteEntry.COLUMN_RATING + " TEXT NOT NULL, " +
+                FavoriteEntry.COLUMN_OVERVIEW + " TEXT NOT NULL, " +
+                FavoriteEntry.COLUMN_VOTE_AVERAGE + " TEXT NOT NULL, " +
                 FavoriteEntry.COLUMN_POPULARITY + " TEXT NOT NULL, " +
-                FavoriteEntry.COLUMN_DATE + " TEXT NOT NULL " +
+                FavoriteEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL " +
                 " );";
 
 

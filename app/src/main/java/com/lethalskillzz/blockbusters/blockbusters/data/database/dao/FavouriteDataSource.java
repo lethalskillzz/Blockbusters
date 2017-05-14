@@ -1,5 +1,6 @@
 package com.lethalskillzz.blockbusters.blockbusters.data.database.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -7,6 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.lethalskillzz.blockbusters.blockbusters.data.database.DatabaseHelper;
 import com.lethalskillzz.blockbusters.blockbusters.data.database.MovieContract.FavoriteEntry;
+import com.lethalskillzz.blockbusters.blockbusters.data.model.MovieResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,10 +24,11 @@ public class FavouriteDataSource {
     // Database fields
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
-    private String[] allColumns = { FavoriteEntry._ID, FavoriteEntry.COLUMN_MOVIE_ID,
-            FavoriteEntry.COLUMN_TITLE, FavoriteEntry.COLUMN_POSTER_PATH,
-            FavoriteEntry.COLUMN_SYNOPSIS, FavoriteEntry.COLUMN_RATING,
-            FavoriteEntry.COLUMN_POPULARITY, FavoriteEntry.COLUMN_DATE};
+    private String[] allColumns = {FavoriteEntry.COLUMN_POSTER_PATH,
+            FavoriteEntry.COLUMN_OVERVIEW, FavoriteEntry.COLUMN_RELEASE_DATE,
+            FavoriteEntry.COLUMN_MOVIE_ID, FavoriteEntry.COLUMN_TITLE,
+            FavoriteEntry.COLUMN_POSTER_PATH, FavoriteEntry.COLUMN_POPULARITY,
+            FavoriteEntry.COLUMN_VOTE_AVERAGE};
 
 
     public FavouriteDataSource(Context context) {
@@ -40,7 +46,7 @@ public class FavouriteDataSource {
 
 
     /**
-     * Check if Favourites are empty
+     * Check if Movies are empty
      */
     public boolean isFavouriteEmpty() {
 
@@ -58,98 +64,97 @@ public class FavouriteDataSource {
 
 
     /**
-     * Creating new Images
+     * Creating new Movies
      */
-    public Image createImage(Image image) {
+    public MovieResult createMovies(MovieResult movieResult) {
 
         ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_ID, image.getId());
-        values.put(DatabaseHelper.COLUMN_TITLE, image.getTitle());
-        values.put(DatabaseHelper.COLUMN_DESCRIPTION, image.getDescription());
-        values.put(DatabaseHelper.COLUMN_DATE_TIME, image.getDatetime());
-        values.put(DatabaseHelper.COLUMN_COVER, image.getCover());
-        values.put(DatabaseHelper.COLUMN_UPS, image.getUps());
-        values.put(DatabaseHelper.COLUMN_DOWNS, image.getDowns());
-        values.put(DatabaseHelper.COLUMN_SCORE, image.getScore());
-        values.put(DatabaseHelper.COLUMN_IS_ALBUM, image.getIsAlbum());
+        values.put(FavoriteEntry.COLUMN_POSTER_PATH, movieResult.getPosterPath());
+        values.put(FavoriteEntry.COLUMN_OVERVIEW, movieResult.getOverview());
+        values.put(FavoriteEntry.COLUMN_RELEASE_DATE, movieResult.getReleaseDate());
+        values.put(FavoriteEntry.COLUMN_MOVIE_ID, movieResult.getId());
+        values.put(FavoriteEntry.COLUMN_TITLE, movieResult.getTitle());
+        values.put(FavoriteEntry.COLUMN_BACKDROP_PATH, movieResult.getBackdropPath());
+        values.put(FavoriteEntry.COLUMN_POPULARITY, movieResult.getPopularity());
+        values.put(FavoriteEntry.COLUMN_VOTE_AVERAGE, movieResult.getVoteAverage());
 
         // insert row
-        database.insert(DatabaseHelper.TABLE_IMAGE, DatabaseHelper.COLUMN_ID, values);
+        database.insert(FavoriteEntry.TABLE_NAME, FavoriteEntry.COLUMN_MOVIE_ID, values);
 
-        return image;
+        return movieResult;
     }
 
 
     /**
-     * Read All Images
+     * Read All Movies
      */
-    public List<Image> readAllImages() {
+    public List<MovieResult> readAllMovies() {
 
         String whereClause = null;
         String[] whereArgs = null;
-        List<Image> images = new ArrayList<>();
+        List<MovieResult> movieResults = new ArrayList<>();
 
-        Cursor cursor = database.query(DatabaseHelper.TABLE_IMAGE,
+        Cursor cursor = database.query(FavoriteEntry.TABLE_NAME,
                 allColumns, whereClause, whereArgs, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Image image = cursorToImage(cursor);
-            images.add(image);
+            MovieResult movieResult = cursorToMovies(cursor);
+            movieResults.add(movieResult);
             cursor.moveToNext();
         }
         // make sure to close the cursor
         cursor.close();
-        return images;
+        return movieResults;
     }
 
 
     /**
-     * Read Image by Id
+     * Read Movie by Id
      */
-    public Image readImageById(String id) {
+    public MovieResult readMovieById(String id) {
 
-        String whereClause = DatabaseHelper.COLUMN_ID + " LIKE ?";
+        String whereClause = FavoriteEntry.COLUMN_MOVIE_ID + " LIKE ?";
         String [] whereArgs = {"%"+id+"%"};
-        Image image = new Image();
+        MovieResult movieResult = new MovieResult();
 
-        Cursor cursor = database.query(DatabaseHelper.TABLE_IMAGE,
+        Cursor cursor = database.query(FavoriteEntry.TABLE_NAME,
                 allColumns,whereClause, whereArgs, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            image = cursorToImage(cursor);
+            movieResult = cursorToMovies(cursor);
             cursor.moveToNext();
         }
         // make sure to close the cursor
         cursor.close();
-        return image;
+        return movieResult;
     }
 
 
 
     /**
-     * Delete Image
+     * Delete Movie
      */
-    public long deleteImage(Image image) {
-        String id = image.getId();
-        return database.delete(DatabaseHelper.TABLE_IMAGE, DatabaseHelper.COLUMN_ID
+    public long deleteImage(MovieResult movieResult) {
+        String id = String.valueOf(movieResult.getId());
+        return database.delete(FavoriteEntry.TABLE_NAME, FavoriteEntry.COLUMN_MOVIE_ID
                 + " = " + "'" + id + "'", null);
     }
 
 
-    private Image cursorToImage(Cursor cursor) {
-        Image image = new Image();
-        image.setId(cursor.getString(0));
-        image.setTitle(cursor.getString(1));
-        image.setDescription(cursor.getString(2));
-        image.setDatetime(cursor.getString(3));
-        image.setCover(cursor.getString(4));
-        image.setUps(cursor.getInt(5));
-        image.setDowns(cursor.getInt(6));
-        image.setScore(cursor.getInt(7));
-        image.setIsAlbum(cursor.getInt(8)==1);
+    private MovieResult cursorToMovies(Cursor cursor) {
 
-        return image;
+        MovieResult movieResult = new MovieResult();
+        movieResult.setPosterPath(cursor.getString(0));
+        movieResult.setOverview(cursor.getString(1));
+        movieResult.setReleaseDate(cursor.getString(2));
+        movieResult.setId(cursor.getInt(3));
+        movieResult.setTitle(cursor.getString(4));
+        movieResult.setBackdropPath(cursor.getString(5));
+        movieResult.setPopularity(cursor.getDouble(6));
+        movieResult.setVoteAverage(cursor.getDouble(7));
+
+        return movieResult;
     }
 }

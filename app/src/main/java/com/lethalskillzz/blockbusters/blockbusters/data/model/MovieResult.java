@@ -72,6 +72,8 @@ public class MovieResult implements Parcelable {
     private Double voteAverage;
 
 
+    public MovieResult() {}
+
     public MovieResult(String posterPath, String overview, String releaseDate, int id, String title,
                        String backdropPath, double popularity, double voteAverage) {
 
@@ -88,13 +90,13 @@ public class MovieResult implements Parcelable {
     public static MovieResult buildResult(Cursor cursor) {
         return new MovieResult(
                 cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_POSTER_PATH)),
-                cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_SYNOPSIS)),
-                cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_DATE)),
+                cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_OVERVIEW)),
+                cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_RELEASE_DATE)),
                 Integer.valueOf(cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_MOVIE_ID))),
                 cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_TITLE)),
                 cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_BACKDROP_PATH)),
                 Double.valueOf(cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_POPULARITY))),
-                Double.valueOf(cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_RATING)))
+                Double.valueOf(cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_VOTE_AVERAGE)))
         );
     }
 

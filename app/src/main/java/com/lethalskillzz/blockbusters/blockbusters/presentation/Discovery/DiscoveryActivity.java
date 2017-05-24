@@ -42,6 +42,8 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
     private String mOrderType;
     private List<MovieResult> mMovieResult;
 
+    private boolean isFavorites;
+
     @BindView(R.id.discovery_toolbar)
     Toolbar toolbar;
     @BindView(R.id.discovery_coordinator_layout)

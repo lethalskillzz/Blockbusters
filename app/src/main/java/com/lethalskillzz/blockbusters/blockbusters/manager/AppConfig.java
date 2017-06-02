@@ -7,7 +7,7 @@ package com.lethalskillzz.blockbusters.blockbusters.manager;
 public class AppConfig {
 
     // API URL
-    public static String BASE_API_URL = "http://api.themoviedb.org/3/";
+    public static String TMDB_API_BASE_URL = "http://api.themoviedb.org/3/";
 
 
     // Get popular movies
@@ -36,12 +36,11 @@ public class AppConfig {
     // image params
     public static final String DISC_IMAGE_SIZE = "w185/";
     public static final String DETAIL_IMAGE_SIZE = "w500/";
+    public static final String BACKDROP_IMAGE_SIZE = "w500/";
 
 
     // API Key param
     public static final String PARAM_TR_API = "?api_key=";
-    // API Key
-    public static final String API_KEY = "<YOUR API KEY>";
 
 
     // Trailers Params

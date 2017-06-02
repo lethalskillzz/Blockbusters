@@ -10,7 +10,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.schedulers.Schedulers;
 
-import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.BASE_API_URL;
+import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.TMDB_API_BASE_URL;
 
 
 /**
@@ -34,7 +34,7 @@ public class ApiClient {
         if (retrofit==null) {
             retrofit = new Retrofit.Builder()
                     .addCallAdapterFactory(rxAdapter)
-                    .baseUrl(BASE_API_URL)
+                    .baseUrl(TMDB_API_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();

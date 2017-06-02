@@ -17,5 +17,8 @@
     <string name="subtitle_most_popular">Most popular</string>
 
     <string name="full_rating">/10</string>
+    <string name="details_overview">Overview</string>
+    <string name="detail_trailers">Trailers</string>
+    <string name="details_reviews">Reviews</string>
 
 </resources>

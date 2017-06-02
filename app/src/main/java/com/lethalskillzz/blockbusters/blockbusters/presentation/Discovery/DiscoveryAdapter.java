@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.lethalskillzz.blockbusters.R;
 import com.lethalskillzz.blockbusters.blockbusters.data.model.MovieResult;
 import com.lethalskillzz.blockbusters.blockbusters.presentation.Details.DetailsActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_result, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, parent, false);
         return new ViewHolder(v);
     }
 
@@ -46,7 +46,9 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         MovieResult movieResult = movieResults.get(position);
         holder.title.setText(movieResult.getTitle());
-        Glide.with(mContext).load(BASE_IMG_URL+DISC_IMAGE_SIZE+ movieResult.getPosterPath()).into(holder.image);
+        Picasso.with(mContext).
+                load(BASE_IMG_URL+DISC_IMAGE_SIZE+ movieResult.getPosterPath())
+                .placeholder(R.mipmap.no_poster).into(holder.poster);
     }
 
     @Override
@@ -64,14 +66,14 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final ImageView image;
+        private final ImageView poster;
         private final TextView title;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            image = (ImageView) itemView.findViewById(R.id.item_result_image);
-            title = (TextView) itemView.findViewById(R.id.item_result_title);
+            poster = (ImageView) itemView.findViewById(R.id.item_movie_poster);
+            title = (TextView) itemView.findViewById(R.id.item_movie_title);
         }
 
         @Override

@@ -1,7 +1,9 @@
 package com.lethalskillzz.blockbusters.blockbusters.presentation.Discovery;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.lethalskillzz.blockbusters.R;
 import com.lethalskillzz.blockbusters.blockbusters.data.model.Movie;
 import com.lethalskillzz.blockbusters.blockbusters.data.model.MovieResult;
 import com.lethalskillzz.blockbusters.blockbusters.data.rest.ApiClient;
@@ -17,8 +19,6 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.API_KEY;
-
 /**
  * Created by ibrahimabdulkadir on 12/04/2017.
  */
@@ -29,8 +29,10 @@ public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View>
 
     private static final String TAG = "DiscoveryPresenter";
     private List<MovieResult> movieResults;
+    private Context context;
 
-    public DiscoveryPresenter() {
+    public DiscoveryPresenter(Context context) {
+        this.context = context;
         movieResults = new ArrayList<>();
     }
 
@@ -45,9 +47,9 @@ public class DiscoveryPresenter extends BasePresenter<DiscoveryMvpContract.View>
 
         Observable<Movie> call;
         if(mOrderType.equals("popularity")) {
-             call = apiService.getPopular(API_KEY);
+            call = apiService.getPopular(context.getString(R.string.tmdb_api_key));
         } else {
-            call = apiService.getTopRated(API_KEY);
+            call = apiService.getTopRated(context.getString(R.string.tmdb_api_key));
         }
         addSubscription(call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

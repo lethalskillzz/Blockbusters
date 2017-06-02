@@ -72,7 +72,7 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
         refreshActionBar();
 
-        presenter = new DiscoveryPresenter();
+        presenter = new DiscoveryPresenter(this);
         presenter.attachView(this);
 
         setupViews();
@@ -81,7 +81,6 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
         rView.setAdapter(discoveryAdapter);
 
         refreshText.setVisibility(View.GONE);
-
 
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(ORDER_TYPE_KEY)) {

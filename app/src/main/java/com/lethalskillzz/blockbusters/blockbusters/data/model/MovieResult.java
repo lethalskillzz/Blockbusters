@@ -221,6 +221,7 @@ public class MovieResult implements Parcelable {
     protected MovieResult(Parcel in) {
         overview = in.readString();
         releaseDate = in.readString();
+        id = in.readInt();
         title = in.readString();
         voteAverage = in.readDouble();
         posterPath = in.readString();
@@ -232,6 +233,7 @@ public class MovieResult implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(overview);
         dest.writeString(releaseDate);
+        dest.writeInt(id);
         dest.writeString(title);
         dest.writeDouble(voteAverage);
         dest.writeString(posterPath);

@@ -19,7 +19,7 @@ public class MovieContract {
 
     public static class FavoriteEntry implements BaseColumns {
 
-        public static final String TABLE_NAME = "favorites";
+        public static final String TABLE_NAME = "movies";
 
         public static final String DIR_BASE_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + PROVIDER_AUTHORITY + "/" + TABLE_NAME;
         public static final String ITEM_BASE_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + PROVIDER_AUTHORITY + "/" + TABLE_NAME;

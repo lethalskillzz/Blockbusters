@@ -18,7 +18,7 @@ import java.util.List;
  * Created by ibrahimabdulkadir on 13/05/2017.
  */
 
-public class FavouriteDataSource {
+public class MovieDataSource {
 
 
     // Database fields
@@ -31,7 +31,7 @@ public class FavouriteDataSource {
             FavoriteEntry.COLUMN_VOTE_AVERAGE};
 
 
-    public FavouriteDataSource(Context context) {
+    public MovieDataSource(Context context) {
         dbHelper = new DatabaseHelper(context);
     }
 
@@ -136,7 +136,7 @@ public class FavouriteDataSource {
     /**
      * Delete Movie
      */
-    public long deleteImage(MovieResult movieResult) {
+    public long deleteMovie(MovieResult movieResult) {
         String id = String.valueOf(movieResult.getId());
         return database.delete(FavoriteEntry.TABLE_NAME, FavoriteEntry.COLUMN_MOVIE_ID
                 + " = " + "'" + id + "'", null);

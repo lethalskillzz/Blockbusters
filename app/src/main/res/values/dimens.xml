@@ -20,9 +20,9 @@
     <dimen name="result_item_title_size">12sp</dimen>
     <dimen name="result_item_title_padding">5dp</dimen>
 
-    <dimen name="video_item_name_size">18sp</dimen>
-    <dimen name="video_item_thumb_width">100dp</dimen>
-    <dimen name="video_item_thumb_height">72dp</dimen>
+    <dimen name="video_item_name_size">15sp</dimen>
+    <dimen name="video_item_thumb_width">120dp</dimen>
+    <dimen name="video_item_thumb_height">82dp</dimen>
     <dimen name="video_item_thumb_padding">12dp</dimen>
 
     <dimen name="review_author_size">15sp</dimen>

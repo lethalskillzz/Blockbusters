@@ -34,7 +34,7 @@ import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.RESU
 public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvpContract.View {
 
     private static final String TAG = "DiscoveryActivity";
-    DiscoveryMvpContract.Presenter presenter;
+    private DiscoveryMvpContract.Presenter presenter;
     private ConnectionDetector cd;
     private DiscoveryAdapter discoveryAdapter;
 
@@ -45,15 +45,15 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
     private boolean isFavorites;
 
     @BindView(R.id.discovery_toolbar)
-    Toolbar toolbar;
+    private Toolbar toolbar;
     @BindView(R.id.discovery_coordinator_layout)
-    CoordinatorLayout coordinatorLayout;
+    private CoordinatorLayout coordinatorLayout;
     @BindView(R.id.discovery_recycler_view)
-    RecyclerView rView;
+    private RecyclerView rView;
     @BindView(R.id.discovery_swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.refresh_text)
-    TextView refreshText;
+    private TextView refreshText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

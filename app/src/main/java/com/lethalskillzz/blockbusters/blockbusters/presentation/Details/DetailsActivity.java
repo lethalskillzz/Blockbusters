@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lethalskillzz.blockbusters.R;
+import com.lethalskillzz.blockbusters.blockbusters.data.database.dao.MovieDataSource;
 import com.lethalskillzz.blockbusters.blockbusters.data.model.MovieResult;
 import com.lethalskillzz.blockbusters.blockbusters.data.model.ReviewResult;
 import com.lethalskillzz.blockbusters.blockbusters.data.model.VideoResult;
@@ -24,43 +25,51 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.BACKDROP_IMAGE_SIZE;
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.BASE_IMG_URL;
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.CLICK_GRID;
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.DETAIL_IMAGE_SIZE;
+import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.FAVOURITE_KEY;
+import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.RESULT_KEY;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsMvpContract.View{
 
     private static final String TAG = "DetailsActivity";
-    DetailsMvpContract.Presenter presenter;
+    private DetailsMvpContract.Presenter presenter;
 
     private ConnectionDetector cd;
+    private MovieDataSource movieDataSource;
+    private MovieResult movieResult;
     private VideoAdapter videoAdapter;
     private ReviewAdapter reviewAdapter;
 
     private List<VideoResult> videoResults;
     private List<ReviewResult> reviewResults;
 
+    private boolean isFavourite;
 
     @BindView(R.id.details_coordinator_layout)
-    CoordinatorLayout coordinatorLayout;
+    private CoordinatorLayout coordinatorLayout;
     @BindView(R.id.details_toolbar)
-    Toolbar mToolbar;
+    private Toolbar mToolbar;
     @BindView(R.id.details_date)
-    TextView mDate;
+    private TextView mDate;
     @BindView(R.id.details_vote)
-    TextView mRating;
+    private TextView mRating;
     @BindView(R.id.details_plot)
-    TextView mPlot;
+    private TextView mPlot;
     @BindView(R.id.details_image)
-    ImageView mImage;
+    private ImageView mImage;
     @BindView(R.id.details_backdrop)
-    ImageView mBackdrop;
+    private ImageView mBackdrop;
     @BindView(R.id.details_videos_recycler_view)
-    RecyclerView videosRecyclerView;
+    private RecyclerView videosRecyclerView;
     @BindView(R.id.details_reviews_recycler_view)
-    RecyclerView reviewRecyclerView;
+    private RecyclerView reviewRecyclerView;
+    @BindView(R.id.details_favourite)
+    private ImageView favouriteClick;
 
 
     @Override
@@ -78,10 +87,22 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
         presenter.attachView(this);
 
         cd = new ConnectionDetector(this);
+        movieDataSource = new MovieDataSource(this);
         videoResults = new ArrayList<>();
         reviewResults = new ArrayList<>();
 
-        MovieResult movieResult = getIntent().getParcelableExtra(CLICK_GRID);
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(FAVOURITE_KEY)) {
+                isFavourite = savedInstanceState.getBoolean(FAVOURITE_KEY);
+            }
+            if (savedInstanceState.containsKey(RESULT_KEY)) {
+                movieResult = savedInstanceState.getParcelable(RESULT_KEY);
+            }
+        } else {
+            isFavourite = getIntent().getBooleanExtra(CLICK_GRID, false);
+            movieResult = getIntent().getParcelableExtra(CLICK_GRID);
+        }
+
 
         videoAdapter = new VideoAdapter(this);
         reviewAdapter = new ReviewAdapter(this);
@@ -103,6 +124,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
 
         getSupportActionBar().setTitle(movieResult.getTitle());
 
+
         mRating.setText(String.valueOf(movieResult.getVoteAverage())+getString(R.string.full_rating));
         mDate.setText(movieResult.getReleaseDate());
         mPlot.setText(movieResult.getOverview());
@@ -114,6 +136,17 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
         Picasso.with(this).
                 load(BASE_IMG_URL+BACKDROP_IMAGE_SIZE+ movieResult.getBackdropPath())
                 .placeholder(R.mipmap.no_poster).into(mBackdrop);
+    }
+
+
+    @OnClick(R.id.details_favourite)
+    public void favourite(View view) {
+
+        movieDataSource.open();
+        movieDataSource.deleteMovie(movieResult);
+        movieDataSource.createMovies(movieResult);
+        movieDataSource.close();
+
     }
 
 
@@ -129,8 +162,21 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
         reviewRecyclerView.setHasFixedSize(true);
         reviewRecyclerView.setAdapter(reviewAdapter);
 
-
     }
+
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        super.onSaveInstanceState(outState);
+
+        if (movieResult != null) {
+            outState.putBoolean(FAVOURITE_KEY, isFavourite);
+            outState.putParcelable(RESULT_KEY, movieResult);
+        }
+    }
+
 
     @Override
     protected void onDestroy() {

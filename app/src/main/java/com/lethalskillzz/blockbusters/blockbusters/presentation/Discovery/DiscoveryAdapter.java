@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lethalskillzz.blockbusters.R;
+import com.lethalskillzz.blockbusters.blockbusters.data.database.dao.MovieDataSource;
 import com.lethalskillzz.blockbusters.blockbusters.data.model.MovieResult;
 import com.lethalskillzz.blockbusters.blockbusters.presentation.Details.DetailsActivity;
 import com.squareup.picasso.Picasso;
@@ -17,8 +18,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.BASE_IMG_URL;
-import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.CLICK_GRID;
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.DISC_IMAGE_SIZE;
+import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.FAVOURITE_KEY;
+import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.RESULT_KEY;
 
 /**
  * Created by ibrahimabdulkadir on 12/04/2017.
@@ -29,7 +31,6 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
     private static final String TAG = "DiscoveryAdapter";
     private Context mContext;
     private List<MovieResult> movieResults;
-
 
     public DiscoveryAdapter(Context context) {
         mContext = context;
@@ -78,8 +79,19 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
         @Override
         public void onClick(View view) {
+
+            boolean isFavourite = false;
+
+            MovieDataSource movieDataSource = new MovieDataSource(mContext);
+            movieDataSource.open();
+            if(movieDataSource.isFavourite(String.valueOf(movieResults.get(getAdapterPosition()).getId()))) {
+                isFavourite = true;
+            }
+            movieDataSource.close();
+
             Intent intent = new Intent(view.getContext(), DetailsActivity.class);
-            intent.putExtra(CLICK_GRID, movieResults.get(getAdapterPosition()));
+            intent.putExtra(RESULT_KEY, movieResults.get(getAdapterPosition()));
+            intent.putExtra(FAVOURITE_KEY, isFavourite);
             view.getContext().startActivity(intent);
         }
     }

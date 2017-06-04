@@ -4,6 +4,7 @@
     <string name="msg_refresh">Pull to refresh</string>
 
     <string name="error_no_internet">Couldn\'t connect. Please check your Internet connection!</string>
+    <string name="error_no_favourites">You have no favorites yet!</string>
 
 
     <string name="toggle_popular">Popular movies</string>

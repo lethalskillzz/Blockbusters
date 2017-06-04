@@ -132,6 +132,23 @@ public class MovieDataSource {
     }
 
 
+    /**
+     * Read Movie by Id
+     */
+    public boolean isFavourite(String id) {
+
+        String whereClause = FavoriteEntry.COLUMN_MOVIE_ID + " LIKE ?";
+        String [] whereArgs = {"%"+id+"%"};
+
+        Cursor cursor = database.query(FavoriteEntry.TABLE_NAME,
+                allColumns,whereClause, whereArgs, null, null, null);
+
+        boolean isFavourite = (cursor.getCount() > 0);
+        // make sure to close the cursor
+        cursor.close();
+        return isFavourite;
+    }
+
 
     /**
      * Delete Movie

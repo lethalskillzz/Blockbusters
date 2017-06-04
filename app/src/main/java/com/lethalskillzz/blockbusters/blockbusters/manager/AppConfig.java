@@ -56,8 +56,8 @@ public class AppConfig {
     public static final String ORDER_TYPE_KEY = "orderTypeKey";
     public static final String RESULT_KEY = "resultTempKey";
     public static final String FAVOURITE_KEY = "isFavouriteKey";
-
-    public static final String CLICK_GRID = "clickGrid";
+    public static final String VIDEO_KEY = "videoKey";
+    public static final String REVIEW_KEY = "reviewKey";
 }
 
 

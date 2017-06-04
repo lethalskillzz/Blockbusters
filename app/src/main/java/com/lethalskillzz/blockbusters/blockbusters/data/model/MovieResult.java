@@ -226,6 +226,7 @@ public class MovieResult implements Parcelable {
         voteAverage = in.readDouble();
         posterPath = in.readString();
         backdropPath = in.readString();
+        popularity = in.readDouble();
 
     }
 
@@ -238,6 +239,7 @@ public class MovieResult implements Parcelable {
         dest.writeDouble(voteAverage);
         dest.writeString(posterPath);
         dest.writeString(backdropPath);
+        dest.writeDouble(popularity);
     }
 
 

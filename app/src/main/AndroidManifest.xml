@@ -23,8 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".blockbusters.presentation.Details.DetailsActivity" />
         <activity android:name=".blockbusters.presentation.Discovery.DiscoveryActivity" />
+        <activity android:name=".blockbusters.presentation.Details.DetailsActivity"
+            android:parentActivityName=".blockbusters.presentation.Discovery.DiscoveryActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".blockbusters.presentation.Discovery.DiscoveryActivity" />
+        </activity>
     </application>
 
 </manifest>

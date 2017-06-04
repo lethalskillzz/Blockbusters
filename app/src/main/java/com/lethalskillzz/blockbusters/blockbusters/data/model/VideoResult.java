@@ -4,10 +4,26 @@ package com.lethalskillzz.blockbusters.blockbusters.data.model;
  * Created by ibrahimabdulkadir on 14/05/2017.
  */
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class VideoResult {
+public class VideoResult implements Parcelable {
+
+    public static final Creator<VideoResult> CREATOR = new Creator<VideoResult>() {
+        @Override
+        public VideoResult createFromParcel(Parcel in) {
+            return new VideoResult(in);
+        }
+
+        @Override
+        public VideoResult[] newArray(int size) {
+            return new VideoResult[size];
+        }
+    };
+
 
     @SerializedName("id")
     @Expose
@@ -33,6 +49,23 @@ public class VideoResult {
     @SerializedName("type")
     @Expose
     private String type;
+
+
+    public VideoResult() {}
+
+    public VideoResult(String id, String iso6391, String iso31661, String key, String name,
+                       String site, Integer size, String type) {
+
+        this.id = id;
+        this.iso6391 = iso6391;
+        this.iso31661 = iso31661;
+        this.key = key;
+        this.name = name;
+        this.site = site;
+        this.size = size;
+        this.type = type;
+
+    }
 
     public String getId() {
         return id;
@@ -96,5 +129,35 @@ public class VideoResult {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    protected VideoResult(Parcel in) {
+        id = in.readString();
+        iso6391 = in.readString();
+        iso31661 = in.readString();
+        key = in.readString();
+        name = in.readString();
+        site = in.readString();
+        size = in.readInt();
+        type = in.readString();
+
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(iso6391);
+        dest.writeString(iso31661);
+        dest.writeString(key);
+        dest.writeString(name);
+        dest.writeString(site);
+        dest.writeInt(size);
+        dest.writeString(type);
     }
 }

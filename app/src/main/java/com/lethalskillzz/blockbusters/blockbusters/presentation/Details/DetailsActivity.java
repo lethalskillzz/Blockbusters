@@ -2,6 +2,7 @@ package com.lethalskillzz.blockbusters.blockbusters.presentation.Details;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -29,10 +30,11 @@ import butterknife.OnClick;
 
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.BACKDROP_IMAGE_SIZE;
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.BASE_IMG_URL;
-import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.CLICK_GRID;
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.DETAIL_IMAGE_SIZE;
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.FAVOURITE_KEY;
 import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.RESULT_KEY;
+import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.REVIEW_KEY;
+import static com.lethalskillzz.blockbusters.blockbusters.manager.AppConfig.VIDEO_KEY;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsMvpContract.View{
 
@@ -51,25 +53,25 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
     private boolean isFavourite;
 
     @BindView(R.id.details_coordinator_layout)
-    private CoordinatorLayout coordinatorLayout;
+    CoordinatorLayout coordinatorLayout;
     @BindView(R.id.details_toolbar)
-    private Toolbar mToolbar;
+    Toolbar mToolbar;
     @BindView(R.id.details_date)
-    private TextView mDate;
+    TextView mDate;
     @BindView(R.id.details_vote)
-    private TextView mRating;
+    TextView mRating;
     @BindView(R.id.details_plot)
-    private TextView mPlot;
+    TextView mPlot;
     @BindView(R.id.details_image)
-    private ImageView mImage;
+    ImageView mImage;
     @BindView(R.id.details_backdrop)
-    private ImageView mBackdrop;
+    ImageView mBackdrop;
     @BindView(R.id.details_videos_recycler_view)
-    private RecyclerView videosRecyclerView;
+    RecyclerView videosRecyclerView;
     @BindView(R.id.details_reviews_recycler_view)
-    private RecyclerView reviewRecyclerView;
+    RecyclerView reviewRecyclerView;
     @BindView(R.id.details_favourite)
-    private ImageView favouriteClick;
+    ImageView favouriteClick;
 
 
     @Override
@@ -91,27 +93,35 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
         videoResults = new ArrayList<>();
         reviewResults = new ArrayList<>();
 
-        if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(FAVOURITE_KEY)) {
-                isFavourite = savedInstanceState.getBoolean(FAVOURITE_KEY);
-            }
-            if (savedInstanceState.containsKey(RESULT_KEY)) {
-                movieResult = savedInstanceState.getParcelable(RESULT_KEY);
-            }
-        } else {
-            isFavourite = getIntent().getBooleanExtra(CLICK_GRID, false);
-            movieResult = getIntent().getParcelableExtra(CLICK_GRID);
-        }
-
-
         videoAdapter = new VideoAdapter(this);
         reviewAdapter = new ReviewAdapter(this);
 
         setupViews();
 
         if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(FAVOURITE_KEY)) {
+                isFavourite = savedInstanceState.getBoolean(FAVOURITE_KEY);
+            }
+
+            if (savedInstanceState.containsKey(RESULT_KEY)) {
+                movieResult = savedInstanceState.getParcelable(RESULT_KEY);
+            }
+
+            if (savedInstanceState.containsKey(VIDEO_KEY)) {
+                videoResults = savedInstanceState.getParcelableArrayList(VIDEO_KEY);
+            }
+
+            if (savedInstanceState.containsKey(REVIEW_KEY)) {
+                reviewResults = savedInstanceState.getParcelableArrayList(REVIEW_KEY);
+            }
 
         } else {
+
+            isFavourite = getIntent().getBooleanExtra(FAVOURITE_KEY, false);
+            movieResult = getIntent().getParcelableExtra(RESULT_KEY);
+
+          //  Log.e(TAG, String.valueOf(isFavourite));
+
             if (cd.isConnectingToInternet()) {
 
                 presenter.getVideos(String.valueOf(movieResult.getId()));
@@ -124,7 +134,6 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
 
         getSupportActionBar().setTitle(movieResult.getTitle());
 
-
         mRating.setText(String.valueOf(movieResult.getVoteAverage())+getString(R.string.full_rating));
         mDate.setText(movieResult.getReleaseDate());
         mPlot.setText(movieResult.getOverview());
@@ -136,17 +145,30 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
         Picasso.with(this).
                 load(BASE_IMG_URL+BACKDROP_IMAGE_SIZE+ movieResult.getBackdropPath())
                 .placeholder(R.mipmap.no_poster).into(mBackdrop);
+
+        if(isFavourite) {
+            favouriteClick.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite));
+        } else {
+            favouriteClick.setImageDrawable(getResources().getDrawable(R.drawable.ic_unfavourite));
+        }
+
+
     }
 
 
     @OnClick(R.id.details_favourite)
-    public void favourite(View view) {
+    public void clickFavourite(View view) {
 
         movieDataSource.open();
-        movieDataSource.deleteMovie(movieResult);
-        movieDataSource.createMovies(movieResult);
+        if(isFavourite) {
+            movieDataSource.deleteMovie(movieResult);
+            favouriteClick.setImageDrawable(getResources().getDrawable(R.drawable.ic_unfavourite));
+        } else {
+            movieDataSource.deleteMovie(movieResult);
+            movieDataSource.createMovies(movieResult);
+            favouriteClick.setImageDrawable(getResources().getDrawable(R.drawable.ic_favourite));
+        }
         movieDataSource.close();
-
     }
 
 
@@ -174,6 +196,14 @@ public class DetailsActivity extends AppCompatActivity implements DetailsMvpCont
         if (movieResult != null) {
             outState.putBoolean(FAVOURITE_KEY, isFavourite);
             outState.putParcelable(RESULT_KEY, movieResult);
+        }
+
+        if (videoResults != null) {
+            outState.putParcelableArrayList(VIDEO_KEY, (ArrayList<? extends Parcelable>) videoResults);
+        }
+
+        if (reviewResults != null) {
+            outState.putParcelableArrayList(REVIEW_KEY, (ArrayList<? extends Parcelable>) reviewResults);
         }
     }
 

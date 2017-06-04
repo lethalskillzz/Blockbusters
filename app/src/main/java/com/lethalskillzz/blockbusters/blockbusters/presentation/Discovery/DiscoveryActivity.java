@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lethalskillzz.blockbusters.R;
+import com.lethalskillzz.blockbusters.blockbusters.data.database.dao.MovieDataSource;
 import com.lethalskillzz.blockbusters.blockbusters.data.model.MovieResult;
 import com.lethalskillzz.blockbusters.blockbusters.util.ConnectionDetector;
 import com.lethalskillzz.blockbusters.blockbusters.widget.SpacesItemDecoration;
@@ -36,6 +37,7 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
     private static final String TAG = "DiscoveryActivity";
     private DiscoveryMvpContract.Presenter presenter;
     private ConnectionDetector cd;
+    private MovieDataSource movieDataSource;
     private DiscoveryAdapter discoveryAdapter;
 
     private ActionBar mActionBar;
@@ -45,15 +47,15 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
     private boolean isFavorites;
 
     @BindView(R.id.discovery_toolbar)
-    private Toolbar toolbar;
+    Toolbar toolbar;
     @BindView(R.id.discovery_coordinator_layout)
-    private CoordinatorLayout coordinatorLayout;
+    CoordinatorLayout coordinatorLayout;
     @BindView(R.id.discovery_recycler_view)
-    private RecyclerView rView;
+    RecyclerView rView;
     @BindView(R.id.discovery_swipe_refresh_layout)
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.refresh_text)
-    private TextView refreshText;
+    TextView refreshText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
         // creating connection detector class instance
         cd = new ConnectionDetector(this);
+        movieDataSource = new MovieDataSource(this);
         mMovieResult = new ArrayList<>();
         mOrderType = "popularity";
 
@@ -207,6 +210,10 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
                 toggleOrderType(item);
                 return true;
 
+            case R.id.menu_favourites:
+                showFavourites();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -240,6 +247,20 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             showError(getString(R.string.error_no_internet));
+        }
+    }
+
+    private void showFavourites() {
+
+        List<MovieResult> favourites;
+        movieDataSource.open();
+        favourites  = movieDataSource.readAllMovies();
+        movieDataSource.close();
+
+        if(favourites.size()>0) {
+            showResults(favourites);
+        } else {
+            showError(getString(R.string.error_no_favourites));
         }
     }
 }

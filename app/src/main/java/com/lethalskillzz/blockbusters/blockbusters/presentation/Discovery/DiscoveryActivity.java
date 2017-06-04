@@ -221,9 +221,19 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
     private void refreshActionBar() {
         if (mActionBar != null) {
-            mActionBar.setSubtitle((mOrderType.equals("popularity")
-                            ? getString(R.string.subtitle_most_popular)
-                            : getString(R.string.subtitle_top_rated)));
+            switch (mOrderType) {
+                case "popularity":
+                    mActionBar.setSubtitle(getString(R.string.subtitle_most_popular));
+                    break;
+
+                case "top_rating":
+                    mActionBar.setSubtitle(getString(R.string.subtitle_top_rated));
+                    break;
+
+                case "favourites":
+                    mActionBar.setSubtitle(getString(R.string.subtitle_favourites));
+                    break;
+            }
             mActionBar.invalidateOptionsMenu();
         }
     }
@@ -259,6 +269,8 @@ public class DiscoveryActivity extends AppCompatActivity implements DiscoveryMvp
 
         if(favourites.size()>0) {
             showResults(favourites);
+            mOrderType = "favourites";
+            refreshActionBar();
         } else {
             showError(getString(R.string.error_no_favourites));
         }

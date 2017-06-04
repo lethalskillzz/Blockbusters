@@ -9,6 +9,7 @@
 
     <string name="toggle_popular">Popular movies</string>
     <string name="toggle_top_rated">Top rated movies</string>
+    <string name="toggle_favourites">Favourite movies</string>
 
     <string name="image_desc">Image description</string>
 
@@ -16,6 +17,7 @@
 
     <string name="subtitle_top_rated">Top rated</string>
     <string name="subtitle_most_popular">Most popular</string>
+    <string name="subtitle_favourites">Favourites</string>
 
     <string name="full_rating">/10</string>
     <string name="details_overview">Overview</string>
